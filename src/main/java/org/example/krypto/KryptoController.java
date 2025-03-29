@@ -6,7 +6,11 @@ import javafx.scene.control.TextField;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
-
+import javafx.stage.FileChooser;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
 public class KryptoController {
 
     @FXML
@@ -26,6 +30,9 @@ public class KryptoController {
 
     @FXML
     private TextArea encryptedTextField;
+
+    private FileChooser fileChooser = new FileChooser();
+
 
     @FXML
     public void initialize() {
@@ -125,5 +132,42 @@ public class KryptoController {
     // Walidacja poprawności klucza (16 znaków HEX)
     private boolean isValidHexKey(String key) {
         return key != null && key.matches("[0-9A-Fa-f]{16}");
+    }
+
+
+
+    @FXML
+    protected void onSaveKeysClick() {
+        File selectedFile = fileChooser.showSaveDialog(null);
+        if (selectedFile != null) {
+            try (FileWriter writer = new FileWriter(selectedFile)) {
+                writer.write(keyTextField.getText() + "\n");
+                writer.write(keyTextField2.getText() + "\n");
+                writer.write(keyTextField3.getText() + "\n");
+                informationBlock.setText("Klucze zostały zapisane.");
+            } catch (IOException e) {
+                informationBlock.setText("Błąd zapisu kluczy.");
+            }
+        }
+    }
+    @FXML
+    protected void onLoadKeysClick() {
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            try {
+                String content = new String(Files.readAllBytes(selectedFile.toPath()));
+                String[] keys = content.split("\n");
+                if (keys.length == 3) {
+                    keyTextField.setText(keys[0].trim());
+                    keyTextField2.setText(keys[1].trim());
+                    keyTextField3.setText(keys[2].trim());
+                    informationBlock.setText("Klucze zostały załadowane.");
+                } else {
+                    informationBlock.setText("Błąd: Niepoprawny format pliku z kluczami.");
+                }
+            } catch (IOException e) {
+                informationBlock.setText("Błąd odczytu pliku.");
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -13,7 +14,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.TextArea?>
 <VBox alignment="CENTER" minHeight="514.0" minWidth="656.0" spacing="10.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.krypto.KryptoController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -71,8 +71,8 @@
          <TextField prefHeight="26.0" prefWidth="295.0" promptText="Plik" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          <Label text="Wczytaj klucz z pliku" />
          <Label text="Zapisz klucz do pliku" GridPane.columnIndex="2" />
-         <Button mnemonicParsing="false" text="Wczcytaj" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-         <Button mnemonicParsing="false" text="Zapisz" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+         <Button mnemonicParsing="false" onAction="#onLoadKeysClick" text="Wczcytaj" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         <Button mnemonicParsing="false" onAction="#onSaveKeysClick" text="Zapisz" GridPane.columnIndex="3" GridPane.rowIndex="1" />
       </children>
    </GridPane>
    <Separator prefWidth="200.0" />
