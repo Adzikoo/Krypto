@@ -2,6 +2,7 @@ package org.example.krypto;
 
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.Base64;
 
 public class TripleDES {
     public static class Key {
@@ -38,5 +39,17 @@ public class TripleDES {
         byte[] decryptedData = DES.decrypt(data, key.getKey3());
         byte[] encryptedData = DES.encrypt(decryptedData, key.getKey2());
         return DES.decrypt(encryptedData, key.getKey1());
+    }
+
+    // Szyfrowanie i zwracanie Base64
+    public static String encryptToBase64(byte[] data, Key key) {
+        byte[] encryptedData = encrypt3D(data, key);
+        return Base64.getEncoder().encodeToString(encryptedData);
+    }
+
+    // Deszyfrowanie z Base64
+    public static byte[] decryptFromBase64(String base64Data, Key key) {
+        byte[] encryptedData = Base64.getDecoder().decode(base64Data);
+        return decrypt3D(encryptedData, key);
     }
 }

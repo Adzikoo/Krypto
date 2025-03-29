@@ -1,12 +1,11 @@
 package org.example.krypto;
 
 import java.security.SecureRandom;
-import java.util.Arrays;
 
 public class KeyGenerator {
 
 
-    public static String generateRandomKeyHex() {
+    public static String generateRandomKeyHex(int i) {
         byte[] key = new byte[8];
         SecureRandom random = new SecureRandom();
         random.nextBytes(key);
