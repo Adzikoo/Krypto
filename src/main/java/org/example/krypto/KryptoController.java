@@ -1,12 +1,16 @@
 package org.example.krypto;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
 
 public class KryptoController {
+
+    @FXML
+    private TextField informationBlock;
 
     @FXML
     private TextField keyTextField;
@@ -18,13 +22,20 @@ public class KryptoController {
     private TextField keyTextField3;
 
     @FXML
-    private TextField inputTextField;
+    private TextArea inputTextField;
 
     @FXML
-    private TextField encryptedTextField;
+    private TextArea encryptedTextField;
+
+    @FXML
+    public void initialize() {
+        inputTextField.setWrapText(true); // Włączenie zawijania tekstu
+        encryptedTextField.setWrapText(true); // Włączenie zawijania tekstu
+    }
 
     @FXML
     protected void onGenerateKeyClick() {
+        informationBlock.setText("");
         keyTextField.setText(KeyGenerator.generateRandomKeyHex(16));
         keyTextField2.setText(KeyGenerator.generateRandomKeyHex(16));
         keyTextField3.setText(KeyGenerator.generateRandomKeyHex(16));
@@ -32,13 +43,21 @@ public class KryptoController {
 
     @FXML
     protected void onEncryptClick() {
+        informationBlock.setText("");
+        encryptedTextField.setText("");
         String plainText = inputTextField.getText();
         String keyHex1 = keyTextField.getText();
         String keyHex2 = keyTextField2.getText();
         String keyHex3 = keyTextField3.getText();
 
-        if (plainText.isEmpty() || !isValidHexKey(keyHex1) || !isValidHexKey(keyHex2) || !isValidHexKey(keyHex3)) {
-            encryptedTextField.setText("Błąd: Niepoprawne klucze lub brak tekstu!");
+        if (!isValidHexKey(keyHex1) || !isValidHexKey(keyHex2) || !isValidHexKey(keyHex3)) {
+            //przed wpisaniem czyść pole informacyjne
+
+            informationBlock.setText("Błąd: Brak kluczy!");
+            return;
+        }
+        if(plainText.isEmpty()) {
+            informationBlock.setText("Błąd: Brak tekstu do szyfrowania!");
             return;
         }
         //wyswtlanie kluczy jako listy bajtów
@@ -60,13 +79,19 @@ public class KryptoController {
 
     @FXML
     protected void onDecryptClick() {
+        informationBlock.setText("");
+        inputTextField.setText("");
         String encryptedText = encryptedTextField.getText();
         String keyHex1 = keyTextField.getText();
         String keyHex2 = keyTextField2.getText();
         String keyHex3 = keyTextField3.getText();
 
-        if (encryptedText.isEmpty() || !isValidHexKey(keyHex1) || !isValidHexKey(keyHex2) || !isValidHexKey(keyHex3)) {
-            inputTextField.setText("Błąd: Niepoprawne klucze lub brak tekstu!");
+        if (!isValidHexKey(keyHex1) || !isValidHexKey(keyHex2) || !isValidHexKey(keyHex3)) {
+            informationBlock.setText("Błąd: Brak kluczy!");
+            return;
+        }
+        if(encryptedText.isEmpty()) {
+            informationBlock.setText("Błąd: Brak szyfrogramu!");
             return;
         }
         byte[] key1 = hexToBytes(keyHex1);
