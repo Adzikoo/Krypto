@@ -87,7 +87,7 @@ public class KryptoApplication extends Application {
         TripleDES.Key tripleKey = new TripleDES.Key(key1, key2, key3);
 
         // Sample text to encrypt and decrypt
-        String text = "Hel";
+        String text = "HelHello";
         byte[] textBytes = text.getBytes();
 
         // Encrypt the text

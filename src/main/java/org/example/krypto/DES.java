@@ -258,37 +258,33 @@ public class DES {
     }
 
     public static byte[] encrypt(byte[] data, Key key) {
-        if (data.length % 8 > 0) {
-            byte[] newData = new byte[Math.ceilDiv(data.length, 8) * 8];
-
-            int diff = newData.length - data.length;
-
-            newData[newData.length - 1] = (byte) diff;
-
-            System.arraycopy(data, 0, newData, 0, data.length);
-
-            data = newData;
-        }
-        else {
-            byte[] newData = new byte[data.length + 8];
-
-            newData[newData.length - 1] = (byte) 8;
-
-            System.arraycopy(data, 0, newData, 0, data.length);
-
-            data = newData;
-        }
+//        if (data.length % 8 > 0) {
+//            byte[] newData = new byte[Math.ceilDiv(data.length, 8) * 8];
+//
+//            int diff = newData.length - data.length;
+//
+//            newData[newData.length - 1] = (byte) diff;
+//
+//            System.arraycopy(data, 0, newData, 0, data.length);
+//
+//            data = newData;
+//        }
+        //else {
+//            byte[] newData = new byte[data.length];
+//
+//            newData[newData.length] = (byte) 8;
+//
+//            System.arraycopy(data, 0, newData, 0, data.length);
+//
+//            data = newData;
+        //}
 
         return encryptDecryptInternal(data, key, false);
     }
 
-    public static byte[] decrypt(byte[] data, Key key) {
-        byte[] resultData = encryptDecryptInternal(data, key, true);
-
-        byte bytesToRemove = resultData[resultData.length - 1];
-
-        return Arrays.copyOf(resultData, resultData.length - bytesToRemove);
-    }
+   public static byte[] decrypt(byte[] data, Key key) {
+    return encryptDecryptInternal(data, key, true);
+}
 
 
 }
