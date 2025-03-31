@@ -107,8 +107,8 @@
          <Label text="Otwórz plik zaszyfrowany" GridPane.columnIndex="3" />
          <Button mnemonicParsing="false" onAction="#onLoadFileClick" prefHeight="30.0" prefWidth="156.0" text="Otwórz" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          <Button mnemonicParsing="false" onAction="#onLoadFileDecryptClick" prefHeight="30.0" prefWidth="127.0" text="Otwórz" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-         <TextField promptText="Plik" GridPane.rowIndex="1" />
-         <TextField promptText="Plik" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+         <TextField fx:id="filePathEncrypt" promptText="Plik" GridPane.rowIndex="1" />
+         <TextField fx:id="filePathDecrypt" promptText="Plik" GridPane.columnIndex="3" GridPane.rowIndex="1" />
          <Separator prefWidth="200.0" GridPane.rowIndex="2" />
          <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          <Separator prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
