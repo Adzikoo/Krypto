@@ -6,7 +6,10 @@ import javafx.scene.control.TextField;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
+import javafx.scene.control.RadioButton;
 import javafx.stage.FileChooser;
+
+import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,6 +34,13 @@ public class KryptoController {
     @FXML
     private TextArea encryptedTextField;
 
+    //radio buttony
+    @FXML
+    private RadioButton radioText;
+
+    @FXML
+    private RadioButton radioFile;
+
     private FileChooser fileChooser = new FileChooser();
 
 
@@ -50,6 +60,24 @@ public class KryptoController {
 
     @FXML
     protected void onEncryptClick() {
+        if (radioText.isSelected()) {
+            encryptText();
+        } if (radioFile.isSelected()){
+            //encryptFile();
+        }
+    }
+
+    @FXML
+    protected void onDecryptClick() {
+        if (radioText.isSelected()) {
+            decryptText();
+        } if (radioFile.isSelected()) {
+            //decryptFile();
+        }
+    }
+
+    @FXML
+    protected void encryptText() {
         informationBlock.setText("");
         encryptedTextField.setText("");
         String plainText = inputTextField.getText();
@@ -85,7 +113,7 @@ public class KryptoController {
     }
 
     @FXML
-    protected void onDecryptClick() {
+    protected void decryptText() {
         informationBlock.setText("");
         inputTextField.setText("");
         String encryptedText = encryptedTextField.getText();
@@ -117,6 +145,39 @@ public class KryptoController {
 
         inputTextField.setText(decryptedText);
     }
+
+    //wczytanie pliku do szyfrowania
+    @FXML
+    protected void onLoadFileClick() {
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            try {
+                String content = new String(Files.readAllBytes(selectedFile.toPath()));
+                inputTextField.setText(content);
+                informationBlock.setText("Plik został załadowany.");
+            } catch (IOException e) {
+                informationBlock.setText("Błąd odczytu pliku.");
+            }
+        }
+    }
+
+
+    //Wybierz plik do odszyfrowania
+    @FXML
+    protected void onLoadFileDecryptClick() {
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            try {
+                String content = new String(Files.readAllBytes(selectedFile.toPath()));
+                encryptedTextField.setText(content);
+                informationBlock.setText("Plik został załadowany.");
+            } catch (IOException e) {
+                informationBlock.setText("Błąd odczytu pliku.");
+            }
+        }
+    }
+
+
 
     // Konwersja HEX -> bajty
     private byte[] hexToBytes(String hex) {
@@ -170,4 +231,81 @@ public class KryptoController {
             }
         }
     }
+
+    @FXML
+    protected void onEncryptFileClick() {
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            try {
+                byte[] fileBytes = Files.readAllBytes(selectedFile.toPath());
+
+                // Pobranie kluczy
+                String keyHex1 = keyTextField.getText();
+                String keyHex2 = keyTextField2.getText();
+                String keyHex3 = keyTextField3.getText();
+
+                if (!isValidHexKey(keyHex1) || !isValidHexKey(keyHex2) || !isValidHexKey(keyHex3)) {
+                    informationBlock.setText("Błąd: Brak kluczy!");
+                    return;
+                }
+
+                // Konwersja kluczy HEX -> bajty
+                byte[] keyBytes1 = hexToBytes(keyHex1);
+                byte[] keyBytes2 = hexToBytes(keyHex2);
+                byte[] keyBytes3 = hexToBytes(keyHex3);
+
+                // Tworzenie struktury klucza
+                TripleDES.Key key = new TripleDES.Key(keyBytes1, keyBytes2, keyBytes3);
+
+                // Szyfrowanie pliku
+                byte[] encryptedData = TripleDES.encrypt3D(fileBytes, key);
+
+                // Nadpisanie pliku zaszyfrowaną wersją
+                Files.write(selectedFile.toPath(), encryptedData);
+
+                informationBlock.setText("Plik został zaszyfrowany.");
+            } catch (IOException e) {
+                informationBlock.setText("Błąd odczytu/zapisu pliku.");
+            }
+        }
+    }
+
+    @FXML
+    protected void onDecryptFileClick() {
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            try {
+                byte[] fileBytes = Files.readAllBytes(selectedFile.toPath());
+
+                // Pobranie kluczy
+                String keyHex1 = keyTextField.getText();
+                String keyHex2 = keyTextField2.getText();
+                String keyHex3 = keyTextField3.getText();
+
+                if (!isValidHexKey(keyHex1) || !isValidHexKey(keyHex2) || !isValidHexKey(keyHex3)) {
+                    informationBlock.setText("Błąd: Brak kluczy!");
+                    return;
+                }
+
+                // Konwersja kluczy HEX -> bajty
+                byte[] keyBytes1 = hexToBytes(keyHex1);
+                byte[] keyBytes2 = hexToBytes(keyHex2);
+                byte[] keyBytes3 = hexToBytes(keyHex3);
+
+                // Tworzenie struktury klucza
+                TripleDES.Key key = new TripleDES.Key(keyBytes1, keyBytes2, keyBytes3);
+
+                // Odszyfrowanie pliku
+                byte[] decryptedData = TripleDES.decrypt3D(fileBytes, key);
+
+                // Nadpisanie pliku odszyfrowaną wersją
+                Files.write(selectedFile.toPath(), decryptedData);
+
+                informationBlock.setText("Plik został odszyfrowany.");
+            } catch (IOException e) {
+                informationBlock.setText("Błąd odczytu/zapisu pliku.");
+            }
+        }
+    }
+
 }

@@ -103,10 +103,10 @@
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
      </rowConstraints>
       <children>
-         <Label text="Otwórz plik z tekstem jawnym" />
-         <Label text="Otwórz plik z szyfrogramem" GridPane.columnIndex="3" />
-         <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="156.0" text="Otwórz" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-         <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0" text="Otwórz" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+         <Label text="Wybierz plik do szyfrowania" />
+         <Label text="Otwórz plik zaszyfrowany" GridPane.columnIndex="3" />
+         <Button mnemonicParsing="false" onAction="#onLoadFileClick" prefHeight="30.0" prefWidth="156.0" text="Otwórz" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         <Button mnemonicParsing="false" onAction="#onLoadFileDecryptClick" prefHeight="30.0" prefWidth="127.0" text="Otwórz" GridPane.columnIndex="4" GridPane.rowIndex="1" />
          <TextField promptText="Plik" GridPane.rowIndex="1" />
          <TextField promptText="Plik" GridPane.columnIndex="3" GridPane.rowIndex="1" />
          <Separator prefWidth="200.0" GridPane.rowIndex="2" />
@@ -123,12 +123,12 @@
             <children>
                <Button mnemonicParsing="false" onAction="#onDecryptClick" prefHeight="30.0" prefWidth="223.0" text="&lt;- Deszyfruj" translateY="100.0" />
                <Button mnemonicParsing="false" onAction="#onEncryptClick" prefHeight="30.0" prefWidth="179.0" text="Szyfruj -&gt;" translateY="100.0" />
-               <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="165.0" text="Z okna" translateY="100.0">
+               <RadioButton fx:id="radioText" mnemonicParsing="false" prefHeight="30.0" prefWidth="165.0" text="Z okna" translateY="100.0">
                   <toggleGroup>
                      <ToggleGroup fx:id="oknoplik" />
                   </toggleGroup>
                </RadioButton>
-               <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="164.0" text="Z pliku" toggleGroup="$oknoplik" translateY="100.0" />
+               <RadioButton fx:id="radioFile" mnemonicParsing="false" prefHeight="30.0" prefWidth="164.0" text="Z pliku" toggleGroup="$oknoplik" translateY="100.0" />
             </children>
          </VBox>
          <TextArea fx:id="encryptedTextField" prefHeight="333.0" prefWidth="300.0" promptText="Szyfrogram" />
