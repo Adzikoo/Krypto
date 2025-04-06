@@ -28,7 +28,7 @@
      </rowConstraints>
       <children>
          <Label text="Klucz" />
-         <TextField fx:id="informationBlock" GridPane.columnIndex="1" />
+         <TextField fx:id="informationBlock" promptText="Dziennik zdarzeń" GridPane.columnIndex="1" />
       </children>
    </GridPane>
    <Separator prefWidth="200.0" />
@@ -123,7 +123,7 @@
             <children>
                <Button mnemonicParsing="false" onAction="#onDecryptClick" prefHeight="30.0" prefWidth="223.0" text="&lt;- Deszyfruj" translateY="100.0" />
                <Button mnemonicParsing="false" onAction="#onEncryptClick" prefHeight="30.0" prefWidth="179.0" text="Szyfruj -&gt;" translateY="100.0" />
-               <RadioButton fx:id="radioText" mnemonicParsing="false" prefHeight="30.0" prefWidth="165.0" text="Z okna" translateY="100.0">
+               <RadioButton fx:id="radioText" mnemonicParsing="false" prefHeight="30.0" prefWidth="165.0" selected="true" text="Z okna" translateY="100.0">
                   <toggleGroup>
                      <ToggleGroup fx:id="oknoplik" />
                   </toggleGroup>

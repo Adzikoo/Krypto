@@ -101,19 +101,6 @@ public class Bits {
         for (int i = 0; i < Math.floorDiv(this.data.length, 8); i++) {
             int baseOffset = i * 8;
 
-			/* TODO Nie wiem, wyjątek czy coś
-			var chunk = Arrays.copyOfRange(this.data, baseOffset , baseOffset + 7);
-
-			int count = 0;
-			for (int bitNo = 0; bitNo < 8; bitNo++) {
-				if (this.data[baseOffset + bitNo]) count++;
-			}
-
-			if (count % 2 != 0) {
-				throw new Exception();
-			}
-			*/
-
             System.arraycopy(this.data, baseOffset, newBits, destOffset, 7);
             destOffset += 7;
         }
