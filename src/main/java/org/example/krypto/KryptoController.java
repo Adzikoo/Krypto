@@ -48,9 +48,50 @@ public class KryptoController {
 
     @FXML
     public void initialize() {
-        inputTextField.setWrapText(true); // Włączenie zawijania tekstu
-        encryptedTextField.setWrapText(true); // Włączenie zawijania tekstu
+        inputTextField.setWrapText(true);
+        encryptedTextField.setWrapText(true);
+
+        // Obsługa przeciągania pliku do pola filePathEncrypt
+        filePathEncrypt.setOnDragOver(event -> {
+            if (event.getGestureSource() != filePathEncrypt && event.getDragboard().hasFiles()) {
+                event.acceptTransferModes(javafx.scene.input.TransferMode.COPY);
+            }
+            event.consume();
+        });
+
+        filePathEncrypt.setOnDragDropped(event -> {
+            var db = event.getDragboard();
+            boolean success = false;
+            if (db.hasFiles()) {
+                File file = db.getFiles().get(0); // pierwszy plik
+                filePathEncrypt.setText(file.getAbsolutePath());
+                success = true;
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
+
+        // Obsługa przeciągania pliku do pola filePathDecrypt
+        filePathDecrypt.setOnDragOver(event -> {
+            if (event.getGestureSource() != filePathDecrypt && event.getDragboard().hasFiles()) {
+                event.acceptTransferModes(javafx.scene.input.TransferMode.COPY);
+            }
+            event.consume();
+        });
+
+        filePathDecrypt.setOnDragDropped(event -> {
+            var db = event.getDragboard();
+            boolean success = false;
+            if (db.hasFiles()) {
+                File file = db.getFiles().get(0); // pierwszy plik
+                filePathDecrypt.setText(file.getAbsolutePath());
+                success = true;
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
     }
+
 
     @FXML
     protected void onGenerateKeyClick() {
