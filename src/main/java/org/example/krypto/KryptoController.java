@@ -41,7 +41,7 @@ public class KryptoController {
     private RadioButton radioFile;
 
     @FXML
-    private TextField filePathEncrypt, filePathDecrypt;
+    private TextField filePathEncrypt, filePathDecrypt,filePathEncryptJawny,filePathDecryptSzyfrogram,filePathSaveJawny,filePathSaveSzyfrogram;
 
     private FileChooser fileChooser = new FileChooser();
 
@@ -92,6 +92,71 @@ public class KryptoController {
         });
     }
 
+    @FXML
+    private void onLoadPlaintextFileClick() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Wybierz plik z tekstem jawnym");
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            filePathEncryptJawny.setText(file.getAbsolutePath());
+            try {
+                String content = Files.readString(file.toPath(), StandardCharsets.UTF_8);
+                inputTextField.setText(content);
+            } catch (IOException e) {
+                e.printStackTrace();
+                informationBlock.setText("Błąd: Nie udało się wczytać pliku z tekstem jawnym.");
+            }
+        }
+    }
+
+    @FXML
+    private void onLoadCiphertextFileClick() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Wybierz plik z szyfrogramem");
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+            filePathDecryptSzyfrogram.setText(file.getAbsolutePath());
+            try {
+                String content = Files.readString(file.toPath(), StandardCharsets.UTF_8);
+                encryptedTextField.setText(content);
+            } catch (IOException e) {
+                e.printStackTrace();
+                informationBlock.setText("Błąd: Nie udało się wczytać pliku z szyfrogramem.");
+            }
+        }
+    }
+    @FXML
+    private void onSavePlaintextFileClick() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Zapisz tekst jawny do pliku");
+        File file = fileChooser.showSaveDialog(null);
+        if (file != null) {
+            filePathSaveJawny.setText(file.getAbsolutePath());
+            try {
+                Files.writeString(file.toPath(), inputTextField.getText(), StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                e.printStackTrace();
+                informationBlock.setText("Błąd: Nie udało się zapisać tekstu jawnego.");
+            }
+        }
+    }
+
+    @FXML
+    private void onSaveCiphertextFileClick() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Zapisz szyfrogram do pliku");
+        File file = fileChooser.showSaveDialog(null);
+        if (file != null) {
+            filePathSaveSzyfrogram.setText(file.getAbsolutePath());
+            try {
+                Files.writeString(file.toPath(), encryptedTextField.getText(), StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                e.printStackTrace();
+                informationBlock.setText("Błąd: Nie udało się zapisać szyfrogramu.");
+            }
+        }
+    }
+
 
     @FXML
     protected void onGenerateKeyClick() {
@@ -100,6 +165,7 @@ public class KryptoController {
         keyTextField2.setText(KeyGenerator.generateRandomKeyHex(16));
         keyTextField3.setText(KeyGenerator.generateRandomKeyHex(16));
     }
+
 
     @FXML
     protected void onEncryptClick() {
