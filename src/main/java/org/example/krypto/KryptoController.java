@@ -161,9 +161,9 @@ public class KryptoController {
     @FXML
     protected void onGenerateKeyClick() {
         informationBlock.setText("");
-        keyTextField.setText(KeyGenerator.generateRandomKeyHex(16));
-        keyTextField2.setText(KeyGenerator.generateRandomKeyHex(16));
-        keyTextField3.setText(KeyGenerator.generateRandomKeyHex(16));
+        keyTextField.setText(KeyGenerator.generateRandomKeyHex());
+        keyTextField2.setText(KeyGenerator.generateRandomKeyHex());
+        keyTextField3.setText(KeyGenerator.generateRandomKeyHex());
     }
 
 
