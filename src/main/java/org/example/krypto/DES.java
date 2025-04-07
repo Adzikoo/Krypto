@@ -258,8 +258,6 @@ public class DES {
     }
 
     public static byte[] encrypt(byte[] data, Key key) {
-
-
         return encryptDecryptInternal(data, key, false);
     }
 

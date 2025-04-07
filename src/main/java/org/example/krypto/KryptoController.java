@@ -215,14 +215,14 @@ public class KryptoController {
         // Tworzenie klucza TripleDES
         TripleDES.Key key = new TripleDES.Key(hexToBytes(keyHex1), hexToBytes(keyHex2), hexToBytes(keyHex3));
 
-//        // Szyfrowanie do Base64
-//        String encryptedBase64 = TripleDES.encryptToBase64(plainText.getBytes(StandardCharsets.UTF_8), key);
-//
-//        encryptedTextField.setText(encryptedBase64);
+        // Szyfrowanie do Base64
+        String encryptedBase64 = TripleDES.encryptToBase64(plainText.getBytes(StandardCharsets.UTF_8), key);
 
-        byte[] encryptedBytes = TripleDES.encrypt3D(plainText.getBytes(StandardCharsets.UTF_8), key);
-        String encryptedHex = bytesToHex(encryptedBytes);
-        encryptedTextField.setText(encryptedHex);
+        encryptedTextField.setText(encryptedBase64);
+            //Szyfrownie do bajtów na hex
+//        byte[] encryptedBytes = TripleDES.encrypt3D(plainText.getBytes(StandardCharsets.UTF_8), key);
+//        String encryptedHex = bytesToHex(encryptedBytes);
+//        encryptedTextField.setText(encryptedHex);
         informationBlock.setText("Sukces: Szyfrowanie zakończone.");
     }
 
@@ -255,15 +255,16 @@ public class KryptoController {
         // Tworzenie klucza TripleDES
         TripleDES.Key key = new TripleDES.Key(hexToBytes(keyHex1), hexToBytes(keyHex2), hexToBytes(keyHex3));
 
-//        // Deszyfrowanie Base64
-//        byte[] decryptedData = TripleDES.decryptFromBase64(encryptedText, key);
-//        String decryptedText = new String(decryptedData, StandardCharsets.UTF_8);
-//
-//        inputTextField.setText(decryptedText);
-        byte[] encryptedBytes = hexToBytes(encryptedHex);
-        byte[] decryptedBytes = TripleDES.decrypt3D(encryptedBytes, key);
-        String decryptedText = new String(decryptedBytes, StandardCharsets.UTF_8);
+        // Deszyfrowanie Base64
+        byte[] decryptedData = TripleDES.decryptFromBase64(encryptedText, key);
+        String decryptedText = new String(decryptedData, StandardCharsets.UTF_8);
+
         inputTextField.setText(decryptedText);
+//          //Deszyfroawnie do bajtów na hex
+//        byte[] encryptedBytes = hexToBytes(encryptedHex);
+//        byte[] decryptedBytes = TripleDES.decrypt3D(encryptedBytes, key);
+//        String decryptedText = new String(decryptedBytes, StandardCharsets.UTF_8);
+//        inputTextField.setText(decryptedText);
         informationBlock.setText("Sukces: Deszyfrowanie zakończone.");
     }
 
